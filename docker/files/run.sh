@@ -34,6 +34,8 @@ warning() {
 if [ ! -d "${HOME_DIR}/mysql" ]; then
     source /firstboot/functions
     core3_firstboot
+else
+    /etc/init.d/mariadb start
 fi
 
 core3_boot() {

@@ -9,6 +9,7 @@ source ./env-base
 
 RUN_FORCE=false
 RUN_KILL=false
+RUN_CLEAN=false
 
 while [ $# -gt 0 ]
 do
@@ -20,6 +21,7 @@ do
 done
 
 if $RUN_KILL; then
+    echo "Running kill..."
     docker container kill ${GALAXY_NAME} || true
 fi
 
@@ -32,6 +34,7 @@ set -x
 docker container rm ${GALAXY_NAME}
 
 if $RUN_CLEAN; then
+    echo "Running clean..."
     docker volume rm swgemu-core3 || true
 fi
 
@@ -47,6 +50,8 @@ docker run -it \
     -p ${STATUSPORT}:${STATUSPORT}/tcp \
     -p ${PINGPORT}:${PINGPORT}/udp \
     -p ${ZONESERVERPORT}:${ZONESERVERPORT}/udp \
-    -v shared-tre:/tre:ro \
+    -p 53306:3306 \
+    -v $(pwd)/tre:/tre:ro \
     -v swgemu-core3:/home/swgemu \
+    -v $(pwd)/../MMOCoreORB/bin/scripts:/home/swgemu/workspace/Core3/MMOCoreORB/bin/scripts \
     ${IMAGE}

@@ -17,7 +17,7 @@ RUN set -xe; \
 
 # Install build packages, using clang latest stable as /usr/bin/clang etc.
 RUN set -xe; \
-    apt-get install -y apt-transport-https ca-certificates ca-certificates-java git gnupg lsb-release moreutils software-properties-common wget; \
+    apt-get install -y apt-transport-https ca-certificates ca-certificates-java git gnupg lsb-release moreutils software-properties-common wget default-jdk; \
     wget -O /tmp/llvm.sh https://apt.llvm.org/llvm.sh; \
     chmod +x /tmp/llvm.sh; \
     /tmp/llvm.sh all || /tmp/llvm.sh all; \
@@ -107,6 +107,7 @@ RUN set -xe; \
         valgrind \
         vim-nox \
         wget \
+        default-jdk \
     ; \
     apt-get install lua5.3 liblua5.3-0 liblua5.3-dev; \
     apt-get install lua-inspect lua-socket lua-sec lua-filesystem lua-cjson; \
